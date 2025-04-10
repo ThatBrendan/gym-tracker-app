@@ -1,6 +1,8 @@
 # Gym-tracker-app
-A simple front-end workout tracking application, built using React, Express.js, Tailwind CSS, and Next.js. The app allows users to log their workouts seamlessly. track their progress, and stay motivated on their fitness journey.
 =======
+
+## Overview
+A simple front-end workout tracking application, built using React, Express.js, Tailwind CSS, and Next.js. The app allows users to log their workouts seamlessly. track their progress, and stay motivated on their fitness journey.
 
 ## Getting Started
 
