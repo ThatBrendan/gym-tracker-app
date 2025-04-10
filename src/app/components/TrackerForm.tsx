@@ -1,4 +1,3 @@
-// src/app/components/TrackerForm.tsx
 "use client"; // This component is a client component, so it can use hooks like useState
 
 import { useState } from "react";
@@ -60,7 +59,7 @@ const TrackerForm = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:4000/api/workouts", {
+        const response = await fetch("http://localhost:5000/api/workouts", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -74,6 +73,7 @@ const TrackerForm = () => {
 
         const savedWorkout = await response.json();
         console.log("Workout saved:", savedWorkout);
+        window.dispatchEvent(new Event("workoutSaved"));
       } catch (error) {
         console.error("Error while saving workout:", error);
       }
@@ -135,12 +135,18 @@ const TrackerForm = () => {
               id="workout-duration"
               value={selectedDuration}
               onChange={(e) => setSelectedDuration(e.target.value)}
-              className="mt-1 block w-full border bg-black-600 rounded-md p-2"
+              className="mt-1 block w-full border bg-stone-800 rounded-md p-2"
               required
             >
-              <option value="">Select duration</option>
+              <option value="" className="bg-black-600">
+                Select duration
+              </option>
               {durations.map((duration) => (
-                <option key={duration} value={duration}>
+                <option
+                  key={duration}
+                  value={duration}
+                  className="bg-stone-800"
+                >
                   {duration}
                 </option>
               ))}
@@ -157,20 +163,31 @@ const TrackerForm = () => {
               id="workout-intensity"
               value={selectedIntensity}
               onChange={(e) => setSelectedIntensity(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="mt-1 block w-full border bg-stone-800 rounded-md p-2"
               required
             >
               <option value="">Select intensity</option>
               {intensities.map((intensity) => (
-                <option key={intensity} value={intensity}>
+                <option
+                  key={intensity}
+                  value={intensity}
+                  className="bg-stone-800"
+                >
                   {intensity}
                 </option>
               ))}
             </select>
           </div>
           <button
+            type="button"
+            onClick={() => setStep(1)}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded mr-4"
+          >
+            Back
+          </button>
+          <button
             type="submit"
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
           >
             Continue
           </button>

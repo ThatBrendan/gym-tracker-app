@@ -1,8 +1,4 @@
-let workouts = [
-  { id: "1", workoutType: "Cardio", duration: "30 mins", intensity: "High" },
-  { id: "2", workoutType: "Strength", duration: "45 mins", intensity: "Medium" },
-  { id: "3", workoutType: "Yoga", duration: "60 mins", intensity: "Low" },
-];
+let workouts = [];
 
 export function getWorkouts(req, res) {
   res.json(workouts);

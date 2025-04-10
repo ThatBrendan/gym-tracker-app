@@ -14,26 +14,26 @@ const ExerciseList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/workouts");
-        if (!res.ok) {
-          throw new Error("Failed to fetch workouts");
-        }
-        const data = await res.json();
-        setWorkouts(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      } finally {
-        setLoading(false);
+  const fetchWorkouts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/workouts");
+      if (!res.ok) {
+        throw new Error("Failed to fetch workouts");
       }
-    };
+      const data = await res.json();
+      setWorkouts(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchWorkouts();
   }, []);
 
@@ -42,8 +42,8 @@ const ExerciseList = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Your Workouts</h2>
-      <div className="grid grid-cols-1 gap-4">
+      <h2 className="text-2xl text-center font-bold mb-4">Your Workouts</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
         {workouts.map((workout) => (
           <div key={workout.id} className="border p-4 rounded">
             <h3 className="text-xl font-semibold">{workout.workoutType}</h3>

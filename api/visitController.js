@@ -1,4 +1,4 @@
-let visits = []; // Temporary in-memory storage for scheduled visits
+let visits = [];
 
 export function createVisit(req, res) {
   const newVisit = {
