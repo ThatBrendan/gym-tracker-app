@@ -1,3 +1,4 @@
+// src/app/components/TrackerForm.tsx
 "use client"; // This component is a client component, so it can use hooks like useState
 
 import { useState } from "react";
@@ -48,14 +49,40 @@ const TrackerForm = () => {
   };
 
   // Step 2: Form submit (Workout details)
-  const handleStepTwoSubmit = (e: React.FormEvent) => {
+  const handleStepTwoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedDuration && selectedIntensity) {
+      // Construct the workout payload
+      const workoutData = {
+        workoutType: selectedWorkout,
+        duration: selectedDuration,
+        intensity: selectedIntensity,
+      };
+
+      try {
+        const response = await fetch("http://localhost:4000/api/workouts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(workoutData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to save workout");
+        }
+
+        const savedWorkout = await response.json();
+        console.log("Workout saved:", savedWorkout);
+      } catch (error) {
+        console.error("Error while saving workout:", error);
+      }
+
       setStep(3);
     }
   };
 
-  // Reset form for a new entry (or it could be used to submit the data to a backend)
+  // Reset form for a new entry or for clearing out data
   const handleReset = () => {
     setStep(1);
     setSelectedWorkout("");
@@ -111,15 +138,9 @@ const TrackerForm = () => {
               className="mt-1 block w-full border bg-black-600 rounded-md p-2"
               required
             >
-              <option value="" className="bg-stone-800">
-                Select duration
-              </option>
+              <option value="">Select duration</option>
               {durations.map((duration) => (
-                <option
-                  key={duration}
-                  value={duration}
-                  className="bg-stone-800"
-                >
+                <option key={duration} value={duration}>
                   {duration}
                 </option>
               ))}
@@ -139,15 +160,9 @@ const TrackerForm = () => {
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               required
             >
-              <option value="" className="bg-stone-800">
-                Select intensity
-              </option>
+              <option value="">Select intensity</option>
               {intensities.map((intensity) => (
-                <option
-                  key={intensity}
-                  value={intensity}
-                  className="bg-stone-800"
-                >
+                <option key={intensity} value={intensity}>
                   {intensity}
                 </option>
               ))}
@@ -166,8 +181,9 @@ const TrackerForm = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">Confirmation</h2>
           <p className="mb-4">
-            You had a <span className="font-bold">{selectedWorkout}</span>{" "}
-            workout for <span className="font-bold">{selectedDuration}</span> at{" "}
+            You did a <span className="font-bold">{selectedWorkout}</span>{" "}
+            workout lasting{" "}
+            <span className="font-bold">{selectedDuration}</span> at{" "}
             <span className="font-bold">{selectedIntensity}</span> intensity.
           </p>
           <button

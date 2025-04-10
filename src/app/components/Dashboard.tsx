@@ -1,6 +1,6 @@
-import DashboardDataList from "../dashboard/page";
 import Image from "next/image";
 import DashboardImg from "../../../public/dashboard-logo.jpg";
+import About from "../dashboard/page";
 
 const Dashboard = () => {
   return (
@@ -10,7 +10,7 @@ const Dashboard = () => {
         alt="Dashboard Logo"
         className="mask-t-from-30%"
       />
-      <DashboardDataList />
+      <About />
     </>
   );
 };
