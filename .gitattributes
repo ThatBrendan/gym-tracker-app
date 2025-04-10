@@ -1,0 +1,9 @@
+# This file is used to define attributes for paths in the repository.
+*.ts text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.tsx text eol=lf
+
+
+
+
